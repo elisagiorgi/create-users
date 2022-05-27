@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
+import PropTypes from "prop-types";
 
 import Counter from "../Counter/Counter";
 
@@ -13,12 +14,19 @@ const Card = ({ index, user, onClickEvent, setContent }) => {
       backgroundColor={index % 2 === 0 ? palette[0] : palette[1]}
       onClick={() => {
         onClickEvent();
-        setContent(user.name);
+        setContent(user?.name);
       }}
     >
-      <Counter number={index + 1} /> {user.name}
+      <Counter number={index + 1} /> {user?.name}
     </Container>
   );
 };
 
 export default Card;
+
+Card.propTypes = {
+  index: PropTypes.number,
+  user: PropTypes.object,
+  onClickEvent: PropTypes.func,
+  setContent: PropTypes.func,
+};

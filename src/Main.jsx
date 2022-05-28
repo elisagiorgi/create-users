@@ -12,6 +12,7 @@ import "./modal-styling.css";
 import Button from "./components/Button/Button";
 import { Title, Sub, SubText, Container, ModalText } from "./Main.styled";
 import ModalAddUser from "./components/ModalAddUser/ModalAddUser";
+import DataEntry from "./components/DataEntry/DataEntry";
 
 export const Main = () => {
   const [usersList, setUsersList] = useState([
@@ -20,23 +21,12 @@ export const Main = () => {
     { id: uuid(), name: "Marina Antonini", friends: ["Mario Rossi"] },
   ]);
 
+  const [selectedUser, setSeletedUser] = useState();
+
   // const [openModal, setOpenModal] = useState({ id: uuid(), isOpen: false });
   const [openModal, setOpenModal] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
   const [content, setContent] = useState("");
-
-  const addUser = () => {
-    try {
-      // add
-    } catch (err) {
-      try {
-        // retrying to add
-        console.log("I'm trying a second time to add a new user");
-      } catch (err) {
-        alert("Sorry, something went wrong :( ");
-      }
-    }
-  };
 
   return (
     <>
@@ -57,8 +47,8 @@ export const Main = () => {
             key={index}
             index={index}
             user={user}
-            onClickEvent={() => setOpenModal((prev) => !prev)}
-            setContent={setContent}
+            // onClickEvent={() => setOpenModal((prev) => !prev)}
+            // setContent={setContent}
           />
         ))}
       </Container>
@@ -75,13 +65,18 @@ export const Main = () => {
           modalAnimationOut: "customLeaveModalAnimation",
         }}
       >
-        <ModalText>{content}</ModalText>
-        <Button onClick={() => setOpenModal2((prev) => !prev)}>Add user</Button>
-        <ModalAddUser
-          open={openModal2}
-          // onClose={() => setOpenModal2((prev) => !prev)}
+        {/* <ModalText>{content}</ModalText> */}
+        {/* <Button onClick={() => setOpenModal2((prev) => !prev)}> ciao</Button> */}
+        <DataEntry
+          setUsersList={setUsersList}
+          usersList={usersList}
+          onClose={() => setOpenModal((prev) => !prev)}
         />
       </Modal>
+      <ModalAddUser
+        open={openModal2}
+        onClose={() => setOpenModal2((prev) => !prev)}
+      />
     </>
   );
 };

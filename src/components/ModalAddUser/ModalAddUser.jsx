@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import "./modal-styling.css";
 import Button from "../Button/Button";
 
-const ModalAddUser = ({ open, close }) => {
+const ModalAddUser = ({ open, onClose }) => {
   const [openModal, setOpenModal] = useState(open);
-  console.log(open);
+
+  useEffect(() => {
+    setOpenModal(open);
+  }, [open]);
+
   return (
     <Modal
       open={openModal}
-      onClose={() => setOpenModal((prev) => !prev)}
+      onClose={onClose}
       center
       classNames={{
         overlay: "customOverlay",
@@ -22,8 +26,7 @@ const ModalAddUser = ({ open, close }) => {
         modalAnimationOut: "customLeaveModalAnimation",
       }}
     >
-      <Button onClick={() => setOpenModal((prev) => !prev)}>Add user2</Button>
-      {"modal dentro modal"}
+      {/* <Button onClick={() => setOpenModal((prev) => !prev)}>Add user2</Button> */}
     </Modal>
   );
 };

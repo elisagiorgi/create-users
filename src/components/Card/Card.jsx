@@ -6,7 +6,7 @@ import Counter from "../Counter/Counter";
 
 import { Container } from "./Card.styles";
 
-const Card = ({ index, user, onClickEvent, setContent }) => {
+const Card = ({ index, user, onClickEvent }) => {
   const { palette } = useContext(ThemeContext);
 
   return (
@@ -14,7 +14,6 @@ const Card = ({ index, user, onClickEvent, setContent }) => {
       backgroundColor={index % 2 === 0 ? palette[0] : palette[1]}
       onClick={() => {
         onClickEvent();
-        setContent(user?.name);
       }}
     >
       <Counter number={index + 1} /> {user?.name}
@@ -28,5 +27,4 @@ Card.propTypes = {
   index: PropTypes.number,
   user: PropTypes.object,
   onClickEvent: PropTypes.func,
-  setContent: PropTypes.func,
 };

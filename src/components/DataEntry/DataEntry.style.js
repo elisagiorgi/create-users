@@ -4,6 +4,7 @@ export const Box = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
+  width: 100%;
 `;
 export const DataEntryStyle = styled.div`
   align-items: center;
@@ -25,4 +26,18 @@ export const InputStyle = styled.input`
   color: "palevioletred";
   border: 1px solid black;
   border-radius: 3px;
+`;
+
+export const ClickableFriend = styled.div`
+  cursor: pointer;
+`;
+
+export const Title = styled.span`
+  font-family: "Advent Pro", sans-serif;
+  font-size: 30px;
+`;
+
+export const Text = styled.span`
+  font-family: "Advent Pro", sans-serif;
+  font-size: 20px;
 `;

@@ -10,8 +10,8 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import "./modal-styling.css";
 import Button from "./components/Button/Button";
-import { Title, Sub, SubText, Container, ModalText } from "./Main.styled";
-import ModalAddUser from "./components/ModalAddUser/ModalAddUser";
+import { Title, Sub, SubText, Container, Text } from "./Main.styled";
+
 import DataEntry from "./components/DataEntry/DataEntry";
 
 export const Main = () => {
@@ -21,12 +21,11 @@ export const Main = () => {
     { id: uuid(), name: "Marina Antonini", friends: ["Mario Rossi"] },
   ]);
 
-  const [selectedUser, setSeletedUser] = useState();
-
-  // const [openModal, setOpenModal] = useState({ id: uuid(), isOpen: false });
+  const [userSelected, setUserSelected] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const [openModal2, setOpenModal2] = useState(false);
-  const [content, setContent] = useState("");
+  const [openModalClose, setOpenModalClose] = useState(false);
+
+  console.log("usersList", usersList);
 
   return (
     <>
@@ -35,7 +34,12 @@ export const Main = () => {
         <Sub>
           <SubText>{"View the list of users created or "} </SubText>
           <GrLinkNext />
-          <Button onClick={() => setOpenModal((prev) => !prev)}>
+          <Button
+            onClick={() => {
+              setUserSelected("");
+              setOpenModal((prev) => !prev);
+            }}
+          >
             Add user
           </Button>
         </Sub>
@@ -47,14 +51,16 @@ export const Main = () => {
             key={index}
             index={index}
             user={user}
-            // onClickEvent={() => setOpenModal((prev) => !prev)}
-            // setContent={setContent}
+            onClickEvent={() => {
+              setUserSelected(user.id);
+              setOpenModal((prev) => !prev);
+            }}
           />
         ))}
       </Container>
       <Modal
         open={openModal}
-        onClose={() => setOpenModal((prev) => !prev)}
+        onClose={() => setOpenModalClose((prev) => !prev)}
         center
         classNames={{
           overlay: "customOverlay",
@@ -65,18 +71,42 @@ export const Main = () => {
           modalAnimationOut: "customLeaveModalAnimation",
         }}
       >
-        {/* <ModalText>{content}</ModalText> */}
-        {/* <Button onClick={() => setOpenModal2((prev) => !prev)}> ciao</Button> */}
         <DataEntry
           setUsersList={setUsersList}
           usersList={usersList}
+          userSelected={userSelected}
           onClose={() => setOpenModal((prev) => !prev)}
+          title={
+            !userSelected
+              ? "New user"
+              : `Edit ${
+                  usersList.filter((x) => x.id === userSelected)[0]?.name
+                } `
+          }
         />
       </Modal>
-      <ModalAddUser
-        open={openModal2}
-        onClose={() => setOpenModal2((prev) => !prev)}
-      />
+      <Modal
+        open={openModalClose}
+        onClose={() => setOpenModalClose((prev) => !prev)}
+        center
+        classNames={{
+          overlay: "customOverlay",
+          modal: "customModal",
+        }}
+      >
+        <Text>Are you sure you want to exit ?</Text>
+        <Button primary onClick={() => setOpenModalClose((prev) => !prev)}>
+          Cancel
+        </Button>
+        <Button
+          onClick={() => {
+            setOpenModalClose((prev) => !prev);
+            setOpenModal((prev) => !prev);
+          }}
+        >
+          Close
+        </Button>
+      </Modal>
     </>
   );
 };
